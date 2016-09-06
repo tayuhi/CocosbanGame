@@ -7,7 +7,9 @@ var ResultLayer = cc.Layer.extend({
             audioEngine.stopMusic();
         }
 
-
+        var label = cc.LabelTTF.create("Game Clear!!", "Arial", 26);
+                label.setPosition(size.width / 2, size.height * 5 / 6);
+                this.addChild(label, 1);
 
 
 
@@ -26,7 +28,7 @@ var ResultLayer = cc.Layer.extend({
     },
     onTouchMoved: function(touch, event) {},
     onTouchEnded: function(touch, event) {
-        cc.director.runScene(new gameScene());
+        cc.director.runScene(new secondgameScene());
 
         //bgmの再生をとめる
         if (audioEngine.isMusicPlaying()) {
@@ -41,9 +43,9 @@ var ResultScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
 
-  
+
         // 背景レイヤーをその場で作る
-        var backgroundLayer = new cc.LayerColor(new cc.Color(250, 150, 150, 250));
+        var backgroundLayer = new cc.LayerColor(new cc.Color(50, 250, 50, 250));
         this.addChild(backgroundLayer);
 
         //ラベルとタップイベント取得

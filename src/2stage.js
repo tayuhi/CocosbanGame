@@ -1,5 +1,5 @@
 var size;
-var level = [
+var level2 = [
     [1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 0, 0, 0, 1],
     [1, 1, 3, 0, 2, 0, 1],
@@ -20,7 +20,7 @@ var audioEngine;
 var flag = 0;
 
 
-var gameScene = cc.Scene.extend({
+var secondgameScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
 
