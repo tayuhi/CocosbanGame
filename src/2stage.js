@@ -1,90 +1,95 @@
-var size;
+/*
+var size2;
+var stageflag = 0;
+
+
 var level2 = [
     [1, 1, 1, 1, 1, 1, 1],
     [1, 1, 0, 0, 0, 0, 1],
     [1, 1, 3, 0, 2, 0, 1],
     [1, 0, 0, 4, 0, 0, 1],
-    [1, 0, 3, 1, 2, 0, 1],
+    [1, 0, 0, 1, 2, 0, 1],
     [1, 0, 0, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1]
 ];
 
-var playerPosition; //マップ内のプレイやの位置(ｘ、ｙ)を保持する
-var playerSprite; //プレイヤーのスプライト
-var cratesArray = []; //配置した木箱のスプライトを配列に保持する
 
-var startTouch;
-var endTouch;
-var swipeTolerance = 10; //スワイプかを判断する閾値
-var audioEngine;
-var flag = 0;
+var playerPosition2; //マップ内のプレイやの位置(ｘ、ｙ)を保持する
+var playerSprite2; //プレイヤーのスプライト
+var cratesArray2 = []; //配置した木箱のスプライトを配列に保持する
+
+var startTouch2;
+var endTouch2;
+var swipeTolerance2 = 10; //スワイプかを判断する閾値
+var audioEngine2;
+var flag2 = 0;
 
 
 var secondgameScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
 
-        var layer0 = new gameLayer();
-        layer0.init();
-        this.addChild(layer0);
+        var layer02 = new gameLayer2();
+        layer02.init();
+        this.addChild(layer02);
 
         //音楽再生エンジン
-        audioEngine = cc.audioEngine;
+        audioEngine2 = cc.audioEngine;
         //bgm再生
-        if (!audioEngine.isMusicPlaying()) {
+        if (!audioEngine2.isMusicPlaying()) {
             //audioEngine.playMusic("res/bgm_main.mp3", true);
-            audioEngine.playMusic(res.bgm_main, true);
+            audioEngine2.playMusic(res.bgm_main, true);
         }
     }
 });
 
-var gameLayer = cc.Layer.extend({
+var gameLayer2 = cc.Layer.extend({
     init: function() {
         this._super();
         //スプライトフレームのキャッシュオブジェクトを作成する
-        cache = cc.spriteFrameCache;
+        cache2 = cc.spriteFrameCache;
         //スプライトフレームのデータを読み込む
-        cache.addSpriteFrames(res.spritesheet_plist);
-        var backgroundSprite = cc.Sprite.create(cache.getSpriteFrame("background.png"));
+        cache2.addSpriteFrames(res.spritesheet_plist);
+        var backgroundSprite2 = cc.Sprite.create(cache2.getSpriteFrame("background.png"));
         //アンチエイリアス処理を止める
-        backgroundSprite.getTexture().setAliasTexParameters();
+        backgroundSprite2.getTexture().setAliasTexParameters();
 
-        backgroundSprite.setPosition(240, 160);
+        backgroundSprite2.setPosition(240, 160);
         //スプライトがとても小さいので拡大する
-        backgroundSprite.setScale(5);
-        this.addChild(backgroundSprite);
+        backgroundSprite2.setScale(5);
+        this.addChild(backgroundSprite2);
 
-        var levelSprite = cc.Sprite.create(cache.getSpriteFrame("level.png"));
-        levelSprite.setPosition(240, 110);
-        levelSprite.setScale(5);
-        this.addChild(levelSprite);
+        var level2Sprite = cc.Sprite.create(cache2.getSpriteFrame("level.png"));
+        level2Sprite.setPosition(240, 110);
+        level2Sprite.setScale(5);
+        this.addChild(level2Sprite);
 
         for (i = 0; i < 7; i++) {　　　　　　
-            cratesArray[i] = [];　 //配列オブジェクトの生成
+            cratesArray2[i] = [];　 //配列オブジェクトの生成
             for (j = 0; j < 7; j++) {
-                switch (level[i][j]) {
+                switch (level2[i][j]) {
                     case 4:
                     case 6:
-                        playerSprite = cc.Sprite.create(cache.getSpriteFrame("player.png"));
-                        playerSprite.setPosition(165 + 25 * j, 185 - 25 * i);
-                        playerSprite.setScale(5);
-                        this.addChild(playerSprite);
-                        playerPosition = {
+                        playerSprite2 = cc.Sprite.create(cache2.getSpriteFrame("player.png"));
+                        playerSprite2.setPosition(165 + 25 * j, 185 - 25 * i);
+                        playerSprite2.setScale(5);
+                        this.addChild(playerSprite2);
+                        playerPosition2 = {
                             x: j,
                             y: i
                         };　　　　　　　　　　　　
-                        cratesArray[i][j] = null;　 //playerがいるので、その場所には木箱はないのでnullを代入する
+                        cratesArray2[i][j] = null;　 //playerがいるので、その場所には木箱はないのでnullを代入する
                         break;
                     case 3:
                     case 5:
-                        var crateSprite = cc.Sprite.create(cache.getSpriteFrame("crate.png"));
-                        crateSprite.setPosition(165 + 25 * j, 185 - 25 * i);
-                        crateSprite.setScale(5);
-                        this.addChild(crateSprite);
-                        cratesArray[i][j] = crateSprite; //(i,j)の位置にcrateSpriteを入れる
+                        var crateSprite2 = cc.Sprite.create(cache2.getSpriteFrame("crate.png"));
+                        crateSprite2.setPosition(165 + 25 * j, 185 - 25 * i);
+                        crateSprite2.setScale(5);
+                        this.addChild(crateSprite2);
+                        cratesArray2[i][j] = crateSprite2; //(i,j)の位置にcrateSpriteを入れる
                         break;
                     default:
-                        cratesArray[i][j] = null; //木箱のコード以外の場合は、その場所に木箱がない値としてnullを代入する
+                        cratesArray2[i][j] = null; //木箱のコード以外の場合は、その場所に木箱がない値としてnullを代入する
                         break;
                 }
             }
@@ -94,85 +99,86 @@ var gameLayer = cc.Layer.extend({
     },
 });
 
-var listener = cc.EventListener.create({
-    event: cc.EventListener.TOUCH_ONE_BY_ONE,
+var listener = cc.Eventlistener.create({
+    event2: cc.Eventlistener.TOUCH_ONE_BY_ONE,
     swallowTouches: true,
-    onTouchBegan: function(touch, event) {
-        startTouch = touch.getLocation();
+    onTouchBegan: function(touch2, event2) {
+        startTouch2 = touch2.getLocation();
         return true;
     },
-    onTouchEnded: function(touch, event) {
-        endTouch = touch.getLocation();
-        swipeDirection();
+    onTouchEnded: function(touch2, event2) {
+        endTouch2 = touch2.getLocation();
+        swipeDirection2();
     }
 });
 //スワイプ方向を検出する処理
-function swipeDirection() {
+function swipeDirection2() {
 
 
-    var distX = endTouch.x - startTouch.x;
-    var distY = endTouch.y - startTouch.y;
-    if (Math.abs(distX) + Math.abs(distY) > swipeTolerance) {
-        if (Math.abs(distX) > Math.abs(distY)) {
-            if (distX > 0) { //右方向移動
+    var distX2 = endTouch2.x - startTouch2.x;
+    var distY2 = endTouch2.y - startTouch2.y;
+    if (Math.abs(distX2) + Math.abs(distY) > swipeTolerance2) {
+        if (Math.abs(distX2) > Math.abs(distY)) {
+            if (distX2 > 0) { //右方向移動
                 //playerSprite.setPosition(playerSprite.getPosition().x+25,playerSprite.getPosition().y);
-                move(1, 0);
+                move2(1, 0);
             } else { //左方向移動
                 //playerSprite.setPosition(playerSprite.getPosition().x-25,playerSprite.getPosition().y);
-                move(-1, 0);
+                move2(-1, 0);
             }
         } else {
             //  console.log("endTouch.y "+endTouch.y );
             //  console.log("startTouch.y "+startTouch.y );
-            //  console.log("distY "+ distY );
-            if (distY > 0) { //上方向移動
+            //  console.log("distY2"+ distY2);
+            if (distY2> 0) { //上方向移動
                 //  playerSprite.setPosition(playerSprite.getPosition().x,playerSprite.getPosition().y+25);
-                console.log("上 move(0,-1) distY " + distY);
-                move(0, -1);
+                console.log("上 move2(0,-1) distY2" + distY);
+                move2(0, -1);
 
             } else { //下方向移動
                 //playerSprite.setPosition(playerSprite.getPosition().x,playerSprite.getPosition().y-25);
-                console.log("下 move(0,1) distY " + distY);
-                move(0, 1);
+                console.log("下 move2(0,1) distY2" + distY);
+                move2(0, 1);
             }
         }
     }
 }
 
-function move(deltaX, deltaY) {
-    switch (level[playerPosition.y + deltaY][playerPosition.x + deltaX]) {
+function move2(deltaX2, deltaY2) {
+    switch (level2[playerPosition2.y + deltaY2][playerPosition2.x + deltaX2]) {
         case 0:
         case 2:
-            level[playerPosition.y][playerPosition.x] -= 4;
-            playerPosition.x += deltaX;
-            playerPosition.y += deltaY;
-            level[playerPosition.y][playerPosition.x] += 4;
-            playerSprite.setPosition(165 + 25 * playerPosition.x, 185 - 25 * playerPosition.y);
+            level2[playerPosition2.y][playerPosition2.x] -= 4;
+            playerPosition2.x += deltaX2;
+            playerPosition2.y += deltaY2;
+            level2[playerPosition2.y][playerPosition2.x] += 4;
+            playerSprite2.setPosition(165 + 25 * playerPosition2.x, 185 - 25 * playerPosition2.y);
             break;
         case 3:
         case 5:
-            if (level[playerPosition.y + deltaY * 2][playerPosition.x + deltaX * 2] == 0 ||
-                level[playerPosition.y + deltaY * 2][playerPosition.x + deltaX * 2] == 2) {
-                level[playerPosition.y][playerPosition.x] -= 4;
-                playerPosition.x += deltaX;
-                playerPosition.y += deltaY;
-                level[playerPosition.y][playerPosition.x] += 1;
-                playerSprite.setPosition(165 + 25 * playerPosition.x, 185 - 25 * playerPosition.y);
-                level[playerPosition.y + deltaY][playerPosition.x + deltaX] += 3;
+            if (level2[playerPosition2.y + deltaY2 * 2][playerPosition2.x + deltaX2 * 2] == 0 ||
+                level2[playerPosition2.y + deltaY2 * 2][playerPosition2.x + deltaX2 * 2] == 2) {
+                level2[playerPosition2.y][playerPosition2.x] -= 4;
+                playerPosition2.x += deltaX2;
+                playerPosition2.y += deltaY2;
+                level2[playerPosition2.y][playerPosition2.x] += 1;
+                playerSprite2.setPosition(165 + 25 * playerPosition2.x, 185 - 25 * playerPosition2.y);
+                level2[playerPosition2.y + deltaY2][playerPosition2.x + deltaX2] += 3;
                 //落ちた木箱
-                if (level[playerPosition.y + deltaY][playerPosition.x + deltaX] == 5) {
-                    flag++;
-                    level[playerPosition.y + deltaY][playerPosition.x + deltaX] -= 5;
-                    if (flag == 2) {
+                if (level2[playerPosition2.y + deltaY2][playerPosition2.x + deltaX2] == 5) {
+                    flag2++;
+                    level2[playerPosition2.y + deltaY2][playerPosition2.x + deltaX2] -= 5;
+                    if (flag2 == 1) {
                         cc.director.runScene(new ResultScene());
-                        //level[playerPosition.y+deltaY][playerPosition.x+deltaX]+=1;
+                        //level[playerPosition2.y+deltaY2][playerPosition2.x+deltaX2]+=1;
                     }
                 }
-                var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
-                movingCrate.setPosition(movingCrate.getPosition().x + 25 * deltaX, movingCrate.getPosition().y - 25 * deltaY);
-                cratesArray[playerPosition.y + deltaY][playerPosition.x + deltaX] = movingCrate;
-                cratesArray[playerPosition.y][playerPosition.x] = null;
+                var movingCrate2 = cratesArray2[playerPosition2.y][playerPosition2.x];
+                movingCrate2.setPosition(movingCrate2.getPosition().x + 25 * deltaX2, movingCrate2.getPosition().y - 25 * deltaY2);
+                cratesArray2[playerPosition2.y + deltaY2][playerPosition2.x + deltaX2] = movingCrate2;
+                cratesArray2[playerPosition2.y][playerPosition2.x] = null;
             }
             break;
     }
 }
+*/

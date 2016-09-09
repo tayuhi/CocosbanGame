@@ -1,4 +1,7 @@
+var stage_num = 0;
+
 var ResultLayer = cc.Layer.extend({
+  sprite: null,
     ctor: function() {
         this._super();
         var size = cc.director.getWinSize();
@@ -7,11 +10,30 @@ var ResultLayer = cc.Layer.extend({
             audioEngine.stopMusic();
         }
 
-        var label = cc.LabelTTF.create("Game Clear!!", "Arial", 26);
+        var sprite = cc.Sprite.create(res.egao);
+        sprite.setPosition(size.width / 1.5, size.height / 2.5);
+        sprite.setScale(0.5);
+        this.addChild(sprite, 0);
+
+        var sprite = cc.Sprite.create(res.egao2);
+        sprite.setPosition(size.width / 3, size.height / 2.5);
+        sprite.setScale(0.8);
+        this.addChild(sprite, 0);
+
+
+
+        var label = cc.LabelTTF.create("Game Clear!?", "Arial", 36);
                 label.setPosition(size.width / 2, size.height * 5 / 6);
                 this.addChild(label, 1);
 
+                var label = cc.LabelTTF.create("It is a healing smile.", "Arial", 36);
+                        label.setPosition(size.width / 2, size.height  / 7);
+                        this.addChild(label, 1);
 
+                if (!audioEngine.isMusicPlaying()) {
+                    //audioEngine.playMusic("res/bgm_main.mp3", true);
+                    audioEngine.playMusic(res.bgm_title, true);
+                }
 
         // タップイベントリスナーを登録する
         cc.eventManager.addListener({
@@ -26,9 +48,12 @@ var ResultLayer = cc.Layer.extend({
     onTouchBegan: function(touch, event) {
         return true;
     },
+
+
     onTouchMoved: function(touch, event) {},
     onTouchEnded: function(touch, event) {
-        cc.director.runScene(new secondgameScene());
+      stage_num++;
+        cc.director.runScene(new gameScene());
 
         //bgmの再生をとめる
         if (audioEngine.isMusicPlaying()) {
@@ -45,7 +70,7 @@ var ResultScene = cc.Scene.extend({
 
 
         // 背景レイヤーをその場で作る
-        var backgroundLayer = new cc.LayerColor(new cc.Color(50, 250, 50, 250));
+        var backgroundLayer = new cc.LayerColor(new cc.Color(0, 0, 0, 250));
         this.addChild(backgroundLayer);
 
         //ラベルとタップイベント取得
