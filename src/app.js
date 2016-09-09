@@ -9,17 +9,17 @@ var map;
 
 var level = [
     [1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 0, 3, 1],
     [1, 1, 0, 3, 2, 0, 1],
-    [1, 3, 0, 4, 3, 0, 1],
-    [1, 3, 3, 1, 2, 0, 1],
-    [1, 3, 3, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 1],
+    [1, 0, 3, 1, 2, 3, 1],
+    [1, 0, 4, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1]
 ];
 function init_set(){
   switch (level_num) {
     case 0:
-
+//abc
 console.log("Stage1");
     var level = [
         [1, 1, 1, 1, 1, 1, 1],
@@ -277,11 +277,12 @@ this.addChild(levelSprite2);
               //落ちた木箱
                               if (level[playerPosition.y + deltaY][playerPosition.x + deltaX] == 5) {
                                   flag++;
-                                  //level[playerPosition.y + deltaY][playerPosition.x + deltaX] -= 5;
+
+                                  level[playerPosition.y + deltaY][playerPosition.x + deltaX] -= 5;
                                   if (flag == 2) {
-                                    //  cc.director.runScene(new ResultScene());
+                                    cc.director.runScene(new ResultScene());
                                       //level[playerPosition.y+deltaY][playerPosition.x+deltaX]+=1;
-                                      //audioEngine.playEffect(res.sakebi);
+                                      audioEngine.playEffect(res.sakebi);
                                   }
                                   if(flag == 1){
                                     audioEngine.playEffect(res.nanmanda);
@@ -297,9 +298,9 @@ this.addChild(levelSprite2);
               }
               break;
       }
-        complete_check()      //クリアの確認
+        complete_check()      //クリア
     }
-    // リセット処理
+    /*
     function reset(){
       for (var i = 0; i < 7; i++){
         for (var j = 0; j < 7; j++){
@@ -331,7 +332,7 @@ this.addChild(levelSprite2);
         }
       }
     }
-
+*/
     // １行動前のバックアップ
     function back_up(){
       for (var i = 0; i < 7; i++){
