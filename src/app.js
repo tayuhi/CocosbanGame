@@ -333,7 +333,7 @@ this.addChild(levelSprite2);
       }
     }
 */
-    // １行動前のバックアップ
+    // 一つ行動ののバックアップ
     function back_up(){
       for (var i = 0; i < 7; i++){
         back_map[i] = [];
